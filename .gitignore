@@ -8,4 +8,4 @@ step.*
 kalao-workdir-*/
 kalao-workdir_*/
 *.tgz
-
+.idea
