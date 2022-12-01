@@ -15,61 +15,20 @@ RequiredDirs=()
 source milk-argparse
 
 
-LOOP_CONFNAME="dmloopsim"
+DM_LOOPNAME="KalAO-dmloop"
 #LOOP_WORKDIR=$(<${LOOP_CONFNAME}-conf/WORKDIR)
-LOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
+#LOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
 
-TTMLOOP_CONFNAME="cacaottmloop"
-TTMLOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
+TTM_LOOPNAME="KalAO-ttmloop"
+#TTMLOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
 
 # to be called rootdir
 #LOOP_ROOTDIR=${LOOP_LOOPNAME}-rootdir
 #LOOP_RUNDIR=${LOOP_LOOPNAME}-rundir
 
 
-source ${LOOP_CONFNAME}-conf/cacaovars.bash
 
-##### Load infos for dm
 
-HARDWARE_CONFNAME="kalaohardware"
-
-HARDWARE_LOOPNAME=$(<${HARDWARE_CONFNAME}-conf/LOOPNAME)
-
-HARDWARE_ROOTDIR=${HARDWARE_LOOPNAME}-rootdir
-HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
-
-#source ${HARDWARE_CONFNAME}-conf/cacaovars.${HARDWARE_LOOPNAME}.bash
-
-#HARDWARE_ROOTDIR=$HARDWARE_WORKDIR #"kalaohardware-workdir" #$CACAO_LOOPWORKDIR
-
-#DM_CHINDEX=2
-DM_DMINDEX=$CACAO_DMINDEX
-#DM_LOOPNUMBER=$CACAO_LOOPNUMBER
-#DM_WFSSTREAM=$CACAO_WFSSTREAM
-
-##### Load infos for ttm
-
-#TTM_CONFNAME="kalaohardware"
-#
-#TTM_WORKDIR=$(<${TTM_CONFNAME}-conf/WORKDIR)
-#TTM_LOOPNAME=$(<${TTM_CONFNAME}-conf/LOOPNAME)
-#
-##source ${TTM_CONFNAME}-conf/cacaovars.${TTM_LOOPNAME}.bash
-#
-##TTM_LOOPWORKDIR=$CACAO_LOOPWORKDIR
-##TTM_CHINDEX=2
-##TTM_DMINDEX=$CACAO_DMINDEX
-##TTM_LOOPNUMBER=$CACAO_LOOPNUMBER
-#
-######
-#
-#if [ $HARDWARE_ROOTDIR != $TTM_WORKDIR ]
-#then
-#	echo "DM and TTM workdir should be the same"
-#	exit 1
-#fi
-#
-#WORKDIR=$TTM_WORKDIR
 
 function sendFPScmd {
   echo "SENDING: $1"
@@ -96,14 +55,29 @@ if [ ! -f "$stepFile" ]; then
 
 ##### Launch processes dmloopsim
 
-cacao-loop-deploy "${LOOP_CONFNAME}"
+cacao-loop-deploy "${DM_LOOPNAME}"
 
 #cacao-task-manager -X 4 "${LOOP_CONFNAME}"
 
-cacao-loop-deploy "${TTMLOOP_CONFNAME}"
+cacao-loop-deploy "${TTM_LOOPNAME}"
 #cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
 
 ##### Launch processes hardware
+
+source ${DM_LOOPNAME}-conf/cacaovars.bash
+
+##### Load infos for dm
+
+HARDWARE_LOOPNAME="kalaohardware"
+
+#HARDWARE_LOOPNAME=$(<${HARDWARE_CONFNAME}-conf/LOOPNAME)
+
+HARDWARE_ROOTDIR=${HARDWARE_LOOPNAME}-rootdir
+HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
+
+#source ${HARDWARE_CONFNAME}-conf/cacaovars.${HARDWARE_LOOPNAME}.bash
+
+DM_DMINDEX=$CACAO_DMINDEX
 
 cacao-task-manager -X 4 "${HARDWARE_CONFNAME}"
 
