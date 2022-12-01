@@ -94,31 +94,20 @@ function waitFile {
 stepFile="step.aolaunch.START"
 if [ ! -f "$stepFile" ]; then
 
-##### Launch processes common to both loops
-
-#TODO change hardware-workdir to hardware-setupfiles
-#mkdir -p ${WORKDIR}/hardware-setupfiles
-#pushd ${WORKDIR}/hardware-workdir
-#
-#milk-fpsinit -e cacao -C -f ~/kalao-cacao/src/cacao/src/KalAO_BMC/fpslist.txt
-#milk-fpsinit -e cacao -C -f ~/kalao-cacao/src/cacao/src/KalAO_Nuvu/fpslist.txt
-#milk-fpsinit -e cacao -C -f ~/kalao-cacao/src/cacao/src/KalAO_SHWFS/fpslist.txt
-#
-#popd
-
-#cp -R kalao-hardware_configs/* ${HARDWARE_ROOTDIR}
-
 ##### Launch processes dmloopsim
 
-cacao-task-manager -X 4 "${LOOP_CONFNAME}"
+cacao-loop-deploy "${LOOP_CONFNAME}"
 
-cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
+#cacao-task-manager -X 4 "${LOOP_CONFNAME}"
+
+cacao-loop-deploy "${TTMLOOP_CONFNAME}"
+#cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
 
 ##### Launch processes hardware
 
 cacao-task-manager -X 4 "${HARDWARE_CONFNAME}"
 
-cp -R kalao-hardware_configs/* ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR}
+cp -R hardware_setupfiles/* ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR}
 
 ##### Launch processes ttm loop
 
