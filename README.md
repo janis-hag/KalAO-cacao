@@ -7,7 +7,7 @@ The hardwarelaunch script is used to configure all the CACAO setup for KalAO usi
 - **cacao-loop-deploy KalAO-ttmloop**: to deploy the Tip/Tilt offloading loop
 - **[kalaohardware-conf](kalaohardware-conf)**: the KalAO hardware specific CACAO processes
 
-**[hardware_setupfiles](hardware_setupfiles)** contains the configuration files for the KalAO hardware
+**[hardware_setupfiles](hardware_setupfiles)** contains the configuration files for the KalAO hardware\
 **[turbulence_masks](turbulence_masks)** contains the masks to inject turbulence on the DM
 
 ## Sending turbulence on the DM
