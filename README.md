@@ -16,7 +16,7 @@ Start milk sessions by typing '_milk_'
 
 
 - **Load turbulence file**
-- milk> _loadfits "cube12_12_60000_v10mps_1ms_clean.fits" imc_
+- milk> _loadfits "turbulence_masks/cube12_12_60000_v10mps_1ms_clean.fits" imc_
 - **Open DM SHM channel** 
 - milk> _readshmim dm01disp04_
 - **Send turbulence on DM channel at 1000 microsecond refresh rate**
