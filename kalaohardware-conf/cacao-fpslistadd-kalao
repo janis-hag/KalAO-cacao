@@ -1,0 +1,122 @@
+
+if [ "${CACAO_FPSPROC_BMCDISP}" = "ON" ]; then
+    echolog "ON  CACAO_FPSPROC_BMCDISP"
+    # ==============================================================================
+    # ==========  BMC DM control ===================================================
+    # ==============================================================================
+
+    # FPS name
+    fpsname="bmc_display"
+    fpsarg0="${CACAO_DMINDEX}"
+
+    # FPS full name
+    fpsfname="${fpsname}-${fpsarg0}"
+
+    if grep -q "${fpsname}" fpslist.txt
+    then
+        echolog "Process ${fpsname} already registered - skipping"
+    else
+        echolog "Adding process ${fpsname}"
+	# name_of_fps command_to_execute
+        echo "${fpsname}      KalAO_BMC.display     ${CACAO_DMINDEX}"  >> fpslist.txt
+
+        addfpscmdheader
+
+    	addfpscmd "setval ${fpsfname}.conf.taskset 1"
+	addfpscmd "setval ${fpsfname}.procinfo.RTprio 8"
+    	# infinite loop
+        addfpscmd "setval ${fpsfname}.procinfo.loopcntMax -1"
+        addfpscmd "setval ${fpsfname}.procinfo.triggermode 3"
+        addfpscmd "setval ${fpsfname}.procinfo.triggersname dm${CACAO_DMINDEX}disp"
+        addfpscmd "setval ${fpsfname}.procinfo.triggertimeout 0.0001"
+        addfpscmd "setval ${fpsfname}.DMin dm${CACAO_DMINDEX}disp"
+        addfpscmd "setval ${fpsfname}.TTMin dm${CACAO_DMINDEX}disp"
+        addfpscmd "setval ${fpsfname}.ttm_tip_offset -0.85"
+        addfpscmd "setval ${fpsfname}.ttm_tilt_offset 0.0"
+
+    fi
+else
+    echolog "CACAO_FPSPROC_BMCDISP = OFF"
+fi
+
+
+if [ "${CACAO_FPSPROC_NUVUACQ}" = "ON" ]; then
+    echolog "ON  CACAO_FPSPROC_NUVUACQ"
+    # ==============================================================================
+    # ==========  NUVU camera acquisition ==========================================
+    # ==============================================================================
+
+    # FPS name
+    fpsname="nuvu_acquire"
+    fpsarg0="${CACAO_LOOPNUMBER}"
+
+    # FPS full name
+    fpsfname="${fpsname}-${fpsarg0}"
+
+    if grep -q "${fpsname}" fpslist.txt
+    then
+        echolog "Process ${fpsname} already registered - skipping"
+    else
+        echolog "Adding process ${fpsname}"
+	# name_of_fps command_to_execute
+        echo "${fpsname}      KalAO_Nuvu.acquire        ${CACAO_LOOPNUMBER}"  >> fpslist.txt
+
+
+        addfpscmdheader
+
+    	#addfpscmd "setval ${fpsfname}.conf.taskset 1"
+	    addfpscmd "setval ${fpsfname}.procinfo.RTprio 10"
+    	# infinite loop
+        addfpscmd "setval ${fpsfname}.procinfo.loopcntMax -1"
+        addfpscmd "setval ${fpsfname}.procinfo.triggermode 3"
+        addfpscmd "setval ${fpsfname}.procinfo.triggersname nuvu_raw"
+        addfpscmd "setval ${fpsfname}.exposuretime 0"
+        addfpscmd "setval ${fpsfname}.autogain_params autogain_params.txt"
+
+    fi
+else
+    echolog "CACAO_FPSPROC_NUVUACQ = OFF"
+fi
+
+
+
+
+if [ "${CACAO_FPSPROC_SHWFSPROC}" = "ON" ]; then
+    echolog "ON  CACAO_FPSPROC_SHWFSPROC"
+    # ==============================================================================
+    # ==========  SHWFS processing =================================================
+    # ==============================================================================
+
+    # FPS name
+    fpsname="shwfs_process"
+    fpsarg0="${CACAO_LOOPNUMBER}"
+
+    # FPS full name
+    fpsfname="${fpsname}-${fpsarg0}"
+
+    if grep -q "${fpsname}" fpslist.txt
+    then
+        echolog "Process ${fpsname} already registered - skipping"
+    else
+        echolog "Adding process ${fpsname}"
+	# name_of_fps command_to_execute
+        echo "${fpsname}    KalAO_SHWFS.process     ${CACAO_LOOPNUMBER}"  >> fpslist.txt
+
+
+        addfpscmdheader
+
+    	#addfpscmd "setval ${fpsfname}.conf.taskset 1"
+	    #addfpscmd "setval ${fpsfname}.procinfo.RTprio 10"
+    	# infinite loop
+        addfpscmd "setval ${fpsfname}.procinfo.loopcntMax -1"
+        addfpscmd "setval ${fpsfname}.procinfo.triggermode 3"
+        addfpscmd "setval ${fpsfname}.procinfo.triggersname nuvu_stream"
+        addfpscmd "setval ${fpsfname}.rawWFSin nuvu_stream"
+        addfpscmd "setval ${fpsfname}.spotcoords spots.txt"
+        addfpscmd "setval ${fpsfname}.outWFS shwfs_slopes"
+
+
+    fi
+else
+    echolog "CACAO_FPSPROC_SHWFSPROC = OFF"
+fi

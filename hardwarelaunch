@@ -1,0 +1,219 @@
+#!/bin/bash
+
+set -euo pipefail
+
+MSdescr="KalAO hardware execution script"
+
+source milk-script-std-config
+
+##### Prerequisites
+RequiredCommands=( tmux milk )
+RequiredFiles=()
+RequiredDirs=()
+
+##### parse arguments
+source milk-argparse
+
+
+LOOP_CONFNAME="dmloopsim"
+#LOOP_WORKDIR=$(<${LOOP_CONFNAME}-conf/WORKDIR)
+LOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
+
+TTMLOOP_CONFNAME="cacaottmloop"
+TTMLOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
+
+# to be called rootdir
+#LOOP_ROOTDIR=${LOOP_LOOPNAME}-rootdir
+#LOOP_RUNDIR=${LOOP_LOOPNAME}-rundir
+
+
+source ${LOOP_CONFNAME}-conf/cacaovars.bash
+
+##### Load infos for dm
+
+HARDWARE_CONFNAME="kalaohardware"
+
+HARDWARE_LOOPNAME=$(<${HARDWARE_CONFNAME}-conf/LOOPNAME)
+
+HARDWARE_ROOTDIR=${HARDWARE_LOOPNAME}-rootdir
+HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
+
+#source ${HARDWARE_CONFNAME}-conf/cacaovars.${HARDWARE_LOOPNAME}.bash
+
+#HARDWARE_ROOTDIR=$HARDWARE_WORKDIR #"kalaohardware-workdir" #$CACAO_LOOPWORKDIR
+
+#DM_CHINDEX=2
+DM_DMINDEX=$CACAO_DMINDEX
+#DM_LOOPNUMBER=$CACAO_LOOPNUMBER
+#DM_WFSSTREAM=$CACAO_WFSSTREAM
+
+##### Load infos for ttm
+
+#TTM_CONFNAME="kalaohardware"
+#
+#TTM_WORKDIR=$(<${TTM_CONFNAME}-conf/WORKDIR)
+#TTM_LOOPNAME=$(<${TTM_CONFNAME}-conf/LOOPNAME)
+#
+##source ${TTM_CONFNAME}-conf/cacaovars.${TTM_LOOPNAME}.bash
+#
+##TTM_LOOPWORKDIR=$CACAO_LOOPWORKDIR
+##TTM_CHINDEX=2
+##TTM_DMINDEX=$CACAO_DMINDEX
+##TTM_LOOPNUMBER=$CACAO_LOOPNUMBER
+#
+######
+#
+#if [ $HARDWARE_ROOTDIR != $TTM_WORKDIR ]
+#then
+#	echo "DM and TTM workdir should be the same"
+#	exit 1
+#fi
+#
+#WORKDIR=$TTM_WORKDIR
+
+function sendFPScmd {
+  echo "SENDING: $1"
+  echo "$1" >> ${MILK_SHM_DIR}/${HARDWARE_LOOPNAME}_fpsCTRL.fifo
+}
+
+function waitFile {
+	echo -n "Waiting $1 "
+	while [ ! -f $1 ] ;
+	do
+		echo -n "."
+      	sleep 0.1
+	done
+	echo " Done"
+	sleep 0.1
+}
+
+# ======================================================================
+# Start all processes
+# ======================================================================
+
+stepFile="step.aolaunch.START"
+if [ ! -f "$stepFile" ]; then
+
+##### Launch processes common to both loops
+
+#TODO change hardware-workdir to hardware-setupfiles
+#mkdir -p ${WORKDIR}/hardware-setupfiles
+#pushd ${WORKDIR}/hardware-workdir
+#
+#milk-fpsinit -e cacao -C -f ~/kalao-cacao/src/cacao/src/KalAO_BMC/fpslist.txt
+#milk-fpsinit -e cacao -C -f ~/kalao-cacao/src/cacao/src/KalAO_Nuvu/fpslist.txt
+#milk-fpsinit -e cacao -C -f ~/kalao-cacao/src/cacao/src/KalAO_SHWFS/fpslist.txt
+#
+#popd
+
+#cp -R kalao-hardware_configs/* ${HARDWARE_ROOTDIR}
+
+##### Launch processes dmloopsim
+
+cacao-task-manager -X 4 "${LOOP_CONFNAME}"
+
+cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
+
+##### Launch processes hardware
+
+cacao-task-manager -X 4 "${HARDWARE_CONFNAME}"
+
+cp -R kalao-hardware_configs/* ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR}
+
+##### Launch processes ttm loop
+
+#cacao-task-manager -X 4 "${TTM_CONFNAME}"
+
+touch ${stepFile}
+
+exit
+
+else
+echo "found ${stepFile} -> skipping"
+fi
+
+stepFile="step.aolaunch.HW"
+if [ ! -f "$stepFile" ]; then
+
+
+##### Start hardware
+
+# TODO use DMINDEX and LOOPNUMBER to define name
+sendFPScmd "runstart DMch2disp-01"
+
+sendFPScmd "runstart DMch2disp-02"
+
+#sendFPScmd "confwupdate bmc_display"
+sendFPScmd "runstart bmc_display"
+
+
+#Temporary fix for the process name change
+if [ ! -f /tmp/milk/shwfs_process.fps.shm ]; then
+	ln -s /tmp/milk/shwfs_process-1.fps.shm /tmp/milk/shwfs_process.fps.shm
+fi
+
+#sendFPScmd "confwupdate nuvu_acquire"
+sendFPScmd "runstart nuvu_acquire"
+
+
+##### Load dm flat
+
+waitFile "${MILK_SHM_DIR}/dm${DM_DMINDEX}disp00.im.shm"
+
+pushd ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR} #${HARDWARE_ROOTDIR}/hardware-setupfiles
+
+cacao << EOF
+loadfits "flat_dm.fits" dmflat
+readshmim dm${DM_DMINDEX}disp00
+cpsh dmflat dm${DM_DMINDEX}disp00
+exitCLI
+EOF
+
+popd
+
+touch ${stepFile}
+exit
+
+else
+echo "found ${stepFile} -> skipping"
+fi
+
+# ======================================================================
+# Start SHWFS
+# ======================================================================
+
+stepFile="step.aolaunch.SHWFS"
+if [ ! -f "$stepFile" ]; then
+
+waitFile "${MILK_SHM_DIR}/nuvu_stream.im.shm"
+
+#sendFPScmd "confwupdate shwfs_process"
+sendFPScmd "runstart shwfs_process"
+
+touch ${stepFile}
+exit
+else
+echo "found ${stepFile} -> skipping"
+fi
+
+# ======================================================================
+# Close AO loop
+# ======================================================================
+
+stepFile="step.aolaunch.LOOPRUN"
+if [ ! -f "$stepFile" ]; then
+
+sendFPScmd "waitonrunOFF"
+
+pushd ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR}
+
+cacao << EOF
+loadfits "fps.compsCM-1.datadir/sCMat00.fits" sCMat00_1
+cpsh sCMat00_1 aol1_CMat
+exitCLI
+EOF
+
+popd
+fi
+#sendFPScmd "confwupdate loopRUN-${DM_LOOPNUMBER}"
+

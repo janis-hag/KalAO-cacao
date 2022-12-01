@@ -1,0 +1,15 @@
+# EXP <emgain> <exposuretime>
+# Be carefull, the product of <emgain> and <exposuretime> must always be increasing
+EXP 1 0
+EXP 1 0.5
+EXP 1 0.6
+EXP 1 0.7
+EXP 1 0.8
+EXP 1 0.9
+EXP 1 1.0
+EXP 1 1.1
+EXP 1 1.2
+EXP 1 1.3
+EXP 1 1.4
+EXP 1 1.5
+EXP 1 1.6

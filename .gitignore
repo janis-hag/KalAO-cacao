@@ -1,0 +1,11 @@
+*.swp
+_*
+step.*
+.*-cacaotaskmanager-log
+*-workdir
+*datadir*
+*rootdir
+kalao-workdir-*/
+kalao-workdir_*/
+*.tgz
+
