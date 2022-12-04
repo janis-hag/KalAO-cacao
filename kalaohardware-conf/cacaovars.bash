@@ -1,5 +1,7 @@
 # cacao environment variables for setup
 # This file will be sourced by cacao-setup
+export CACAO_LOOPNAME="kalaohHWloop"
+export CACAO_LOOPNUMBER="1"
 
 # 1 if DM actuators are on a coordinate grid
 # This informs processes if a spatial relationship exists
@@ -15,6 +17,17 @@ export CACAO_DMysize="12"
 
 export CACAO_DMINDEX="01"
 export CACAO_LOOPNUMBER="1"
+
+# ====== DIRECTORIES ================
+
+# Optional. If not defined, will take value "LOOPNAME-rootdir"
+export CACAO_LOOPROOTDIR="kalaohHWloop-rootdir"
+
+# Optional. If not defined, will take value "LOOPNAME-rundir"
+export CACAO_LOOPRUNDIR="kalaohHWloop-rundir"
+
+
+
 
 # input WFS stream
 export CACAO_WFSSTREAM="shwfs_slopes"

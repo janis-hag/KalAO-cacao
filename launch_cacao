@@ -68,7 +68,7 @@ source ${DM_LOOPNAME}-conf/cacaovars.bash
 
 ##### Load infos for dm
 
-HARDWARE_LOOPNAME="kalaohardware"
+HARDWARE_LOOPNAME="kalaohHWloop"
 
 #HARDWARE_LOOPNAME=$(<${HARDWARE_CONFNAME}-conf/LOOPNAME)
 
