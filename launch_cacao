@@ -58,10 +58,12 @@ if [ ! -f "$stepFile" ]; then
 
 cacao-loop-deploy "${DM_LOOPNAME}"
 
+echo "${DM_LOOPNAME} deployed "
 #cacao-task-manager -X 4 "${LOOP_CONFNAME}"
 
 cacao-loop-deploy "${TTM_LOOPNAME}"
 #cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
+echo "${TTM_LOOPNAME} deployed "
 
 ##### Launch processes hardware
 
