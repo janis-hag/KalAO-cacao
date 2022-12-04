@@ -75,7 +75,7 @@ HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
 
 #source ${HARDWARE_CONFNAME}-conf/cacaovars.${HARDWARE_LOOPNAME}.bash
 
-DM_DMINDEX=$CACAO_DMINDEX
+#DM_DMINDEX=$CACAO_DMINDEX
 
 cacao-task-manager -X 4 "${HARDWARE_CONFNAME}"
 
@@ -120,7 +120,7 @@ sendFPScmd "runstart nuvu_acquire"
 
 ##### Load dm flat
 
-waitFile "${MILK_SHM_DIR}/dm${DM_DMINDEX}disp00.im.shm"
+waitFile "${MILK_SHM_DIR}/dm${CACAO_DMINDEX}disp00.im.shm"
 
 pushd ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR} #${HARDWARE_ROOTDIR}/hardware-setupfiles
 
