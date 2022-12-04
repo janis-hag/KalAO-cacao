@@ -26,6 +26,7 @@ TTM_LOOPNAME="KalAO-ttmloop"
 #LOOP_ROOTDIR=${LOOP_LOOPNAME}-rootdir
 #LOOP_RUNDIR=${LOOP_LOOPNAME}-rundir
 
+HARDWARE_LOOPNAME="kalaoHWloop"
 
 
 
@@ -68,9 +69,6 @@ source ${DM_LOOPNAME}-conf/cacaovars.bash
 
 ##### Load infos for dm
 
-HARDWARE_LOOPNAME="kalaoHWloop"
-
-#HARDWARE_LOOPNAME=$(<${HARDWARE_CONFNAME}-conf/LOOPNAME)
 
 HARDWARE_ROOTDIR=${HARDWARE_LOOPNAME}-rootdir
 HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
