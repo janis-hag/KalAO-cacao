@@ -1,6 +1,6 @@
 # cacao environment variables for setup
 # This file will be sourced by cacao-setup
-export CACAO_LOOPNAME="kalaohHWloop"
+export CACAO_LOOPNAME="kalaoHWloop"
 export CACAO_LOOPNUMBER="1"
 
 # 1 if DM actuators are on a coordinate grid
