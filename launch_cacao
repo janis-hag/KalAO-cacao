@@ -96,6 +96,7 @@ fi
 stepFile="step.aolaunch.HW"
 if [ ! -f "$stepFile" ]; then
 
+source ${DM_LOOPNAME}-conf/cacaovars.bash
 
 ##### Start hardware
 
