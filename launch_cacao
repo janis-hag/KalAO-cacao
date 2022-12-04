@@ -126,8 +126,8 @@ pushd ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR} #${HARDWARE_ROOTDIR}/hardware-setup
 
 cacao << EOF
 loadfits "flat_dm.fits" dmflat
-readshmim dm${DM_DMINDEX}disp00
-cpsh dmflat dm${DM_DMINDEX}disp00
+readshmim dm${CACAO_DMINDEX}disp00
+cpsh dmflat dm${CACAO_DMINDEX}disp00
 exitCLI
 EOF
 
