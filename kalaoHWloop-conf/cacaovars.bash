@@ -21,10 +21,10 @@ export CACAO_LOOPNUMBER="1"
 # ====== DIRECTORIES ================
 
 # Optional. If not defined, will take value "LOOPNAME-rootdir"
-export CACAO_LOOPROOTDIR="kalaohHWloop-rootdir"
+export CACAO_LOOPROOTDIR="kalaoHWloop-rootdir"
 
 # Optional. If not defined, will take value "LOOPNAME-rundir"
-export CACAO_LOOPRUNDIR="kalaohHWloop-rundir"
+export CACAO_LOOPRUNDIR="kalaoHWloop-rundir"
 
 
 
