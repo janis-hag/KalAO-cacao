@@ -23,14 +23,15 @@ if [ "${CACAO_FPSPROC_BMCDISP}" = "ON" ]; then
         addfpscmdheader
 
     	addfpscmd "setval ${fpsfname}.conf.taskset 1"
-	addfpscmd "setval ${fpsfname}.procinfo.RTprio 8"
+	    addfpscmd "setval ${fpsfname}.procinfo.RTprio 8"
     	# infinite loop
         addfpscmd "setval ${fpsfname}.procinfo.loopcntMax -1"
         addfpscmd "setval ${fpsfname}.procinfo.triggermode 3"
         addfpscmd "setval ${fpsfname}.procinfo.triggersname dm${CACAO_DMINDEX}disp"
         addfpscmd "setval ${fpsfname}.procinfo.triggertimeout 0.0001"
         addfpscmd "setval ${fpsfname}.DMin dm${CACAO_DMINDEX}disp"
-        addfpscmd "setval ${fpsfname}.TTMin dm${CACAO_TTMINDEX}disp"
+        # addfpscmd "setval ${fpsfname}.TTMin dm${CACAO_TTMINDEX}disp"
+        addfpscmd "setval ${fpsfname}.TTMin dm02disp"
         addfpscmd "setval ${fpsfname}.ttm_tip_offset -0.85"
         addfpscmd "setval ${fpsfname}.ttm_tilt_offset 0.0"
 
@@ -58,7 +59,7 @@ if [ "${CACAO_FPSPROC_NUVUACQ}" = "ON" ]; then
         echolog "Process ${fpsname} already registered - skipping"
     else
         echolog "Adding process ${fpsname}"
-	# name_of_fps command_to_execute
+	    # name_of_fps command_to_execute
         echo "${fpsname}      KalAO_Nuvu.acquire        ${CACAO_LOOPNUMBER}"  >> fpslist.txt
 
 
@@ -99,7 +100,7 @@ if [ "${CACAO_FPSPROC_SHWFSPROC}" = "ON" ]; then
         echolog "Process ${fpsname} already registered - skipping"
     else
         echolog "Adding process ${fpsname}"
-	# name_of_fps command_to_execute
+	    # name_of_fps command_to_execute
         echo "${fpsname}    KalAO_SHWFS.process     ${CACAO_LOOPNUMBER}"  >> fpslist.txt
 
 
