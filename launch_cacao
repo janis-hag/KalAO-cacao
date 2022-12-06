@@ -82,7 +82,7 @@ source ${DM_LOOPNAME}-conf/cacaovars.bash
 
 #DM_DMINDEX=$CACAO_DMINDEX
 
-cacao-task-manager -X 4 "${HARDWARE_CONFNAME}"
+cacao-task-manager -X 4 "${HARDWARE_LOOPNAME}"
 
 cp -R hardware_setupfiles/* ${HARDWARE_ROOTDIR}/${HARDWARE_RUNDIR}
 
