@@ -59,7 +59,7 @@ if [ ! -f "$stepFile" ]; then
 
 ##### Launch processes dmloopsim
 
-unset -e
+set +e
 
 cacao-loop-deploy "${DM_LOOPNAME}"
 
