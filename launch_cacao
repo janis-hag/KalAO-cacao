@@ -29,6 +29,9 @@ TTM_LOOPNAME="KalAO-ttmloop"
 HARDWARE_LOOPNAME="kalaoHWloop"
 
 
+HARDWARE_ROOTDIR=${HARDWARE_LOOPNAME}-rootdir
+HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
+
 
 
 function sendFPScmd {
@@ -56,6 +59,8 @@ if [ ! -f "$stepFile" ]; then
 
 ##### Launch processes dmloopsim
 
+set +e
+
 cacao-loop-deploy "${DM_LOOPNAME}"
 
 echo "${DM_LOOPNAME} deployed "
@@ -70,10 +75,6 @@ echo "${TTM_LOOPNAME} deployed "
 source ${DM_LOOPNAME}-conf/cacaovars.bash
 
 ##### Load infos for dm
-
-
-HARDWARE_ROOTDIR=${HARDWARE_LOOPNAME}-rootdir
-HARDWARE_RUNDIR=${HARDWARE_LOOPNAME}-rundir
 
 #source ${HARDWARE_CONFNAME}-conf/cacaovars.${HARDWARE_LOOPNAME}.bash
 
