@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -euo pipefail
+set -euo pipefail
 
 MSdescr="KalAO hardware execution script"
 
@@ -59,7 +59,7 @@ if [ ! -f "$stepFile" ]; then
 
 ##### Launch processes dmloopsim
 
-set +e
+unset -e
 
 cacao-loop-deploy "${DM_LOOPNAME}"
 
@@ -69,6 +69,8 @@ echo "${DM_LOOPNAME} deployed "
 cacao-loop-deploy "${TTM_LOOPNAME}"
 #cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
 echo "${TTM_LOOPNAME} deployed "
+
+set -e
 
 ##### Launch processes hardware
 
