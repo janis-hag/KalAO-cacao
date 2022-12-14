@@ -32,7 +32,7 @@ if [ "${CACAO_FPSPROC_BMCDISP}" = "ON" ]; then
         addfpscmd "setval ${fpsfname}.DMin dm${CACAO_DMINDEX}disp"
         # addfpscmd "setval ${fpsfname}.TTMin dm${CACAO_TTMINDEX}disp"
         addfpscmd "setval ${fpsfname}.TTMin dm02disp"
-        addfpscmd "setval ${fpsfname}.ttm_tip_offset -0.85"
+        addfpscmd "setval ${fpsfname}.ttm_tip_offset -1.08"
         addfpscmd "setval ${fpsfname}.ttm_tilt_offset 0.0"
 
     fi
