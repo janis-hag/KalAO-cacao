@@ -16,6 +16,8 @@ source milk-argparse
 
 
 DM_LOOPNAME="KalAO-dmloop"
+DMLOOP_ROOTDIR="kalaodmloop-rootdir"
+
 #LOOP_WORKDIR=$(<${LOOP_CONFNAME}-conf/WORKDIR)
 #LOOP_LOOPNAME=$(<${LOOP_CONFNAME}-conf/LOOPNAME)
 
@@ -65,6 +67,11 @@ cacao-loop-deploy "${DM_LOOPNAME}"
 
 echo "${DM_LOOPNAME} deployed "
 #cacao-task-manager -X 4 "${LOOP_CONFNAME}"
+
+pushd ${DMLOOP_ROOTDIR}
+# set hardware mode
+./scripts/aorun-setmode-hardw
+popd
 
 cacao-loop-deploy "${TTM_LOOPNAME}"
 #cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"

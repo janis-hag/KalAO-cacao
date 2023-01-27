@@ -25,3 +25,27 @@ Start milk sessions by typing '_milk_'
 Help for the commands is given with:
 
 _milk> cmd? streamburst_
+
+## Creating _system_ cpuset
+
+Cacao is expecting a cpuset called _system_. If it's not initialised, the following command needs to
+be issued once before launching cacao.
+
+_**sudo cset set -c 0-7 -s system**_
+
+
+# Installing CACAO on KalAO RTC
+
+## Installing end setting up openblas
+
+
+_git clone https://github.com/xianyi/OpenBLAS.git_
+
+Create ld.so.conf file to include openblas:
+
+_echo '/opt/OpenBLAS/lib/'  | sudo tee /etc/ld.so.conf.d/openblas.conf_
+
+Add the following line to _.bash_aliases_:
+
+_export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/OpenBLAS/lib/pkgconfig_
+ 
