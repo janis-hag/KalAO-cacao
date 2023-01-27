@@ -71,12 +71,16 @@ echo "${DM_LOOPNAME} deployed "
 pushd ${DMLOOP_ROOTDIR}
 # set hardware mode
 ./scripts/aorun-setmode-hardw
+cacao-aorun-000-dm start
 popd
 
 cacao-loop-deploy "${TTM_LOOPNAME}"
 #cacao-task-manager -X 4 "${TTMLOOP_CONFNAME}"
 echo "${TTM_LOOPNAME} deployed "
 
+pushd ${TTMLOOP_ROOTDIR}
+cacao-aorun-000-dm start
+popd
 set -e
 
 ##### Launch processes hardware
