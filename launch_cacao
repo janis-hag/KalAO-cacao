@@ -161,6 +161,7 @@ else
 echo "found ${stepFile} -> skipping"
 
 # Script is now ending here
+echo "REACHED END OF LAUNCH SCRIPT"
 exit
 
 fi
