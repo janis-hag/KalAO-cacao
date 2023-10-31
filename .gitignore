@@ -3,16 +3,13 @@ _*
 
 step.*
 .*-log
+*.log
 
 KalAO-dmloop-conf
 KalAO-ttmloop-conf
 
-zz*-workdir
-zz*datadir*
-zz*rootdir
-
-zzkalao-workdir-*/
-zzkalao-workdir_*/
+*-rootdir
+logdir-*
 
 *.tgz
 .idea
