@@ -1,0 +1,1 @@
+sudo cset set -c 0-7 -s system
