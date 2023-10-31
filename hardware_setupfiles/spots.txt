@@ -50,9 +50,9 @@ SPOT  25   5   4   0   # Spot  44
 SPOT  25  10   4   1   # Spot  45
 SPOT  25  15   4   2   # Spot  46
 SPOT  25  20   4   3   # Spot  47
-SPOT  25  25   4   4   # Spot  48
+#SPOT  25  25   4   4   # Spot  48
 #SPOT  25  30   4   5   # Spot  49
-SPOT  25  35   4   6   # Spot  50
+#SPOT  25  35   4   6   # Spot  50
 SPOT  25  40   4   7   # Spot  51
 SPOT  25  45   4   8   # Spot  52
 SPOT  25  50   4   9   # Spot  53
@@ -74,9 +74,9 @@ SPOT  35   5   6   0   # Spot  66
 SPOT  35  10   6   1   # Spot  67
 SPOT  35  15   6   2   # Spot  68
 SPOT  35  20   6   3   # Spot  69
-SPOT  35  25   6   4   # Spot  70
+#SPOT  35  25   6   4   # Spot  70
 #SPOT  35  30   6   5   # Spot  71
-SPOT  35  35   6   6   # Spot  72
+#SPOT  35  35   6   6   # Spot  72
 SPOT  35  40   6   7   # Spot  73
 SPOT  35  45   6   8   # Spot  74
 SPOT  35  50   6   9   # Spot  75
